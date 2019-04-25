@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:with="basePath = ${#httpServletRequest.getScheme() + '://' +
+      #httpServletRequest.getServerName() + ':' + #httpServletRequest.getServerPort()}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{mainPage.title}">主页</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <script th:src="@{/jquery/jquery-3.4.0.min.js}"></script>
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <script th:src="@{/layer/layer.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}"/>
+</head>
+<body>
+    <div th:if="${session.userSession}" th:object="${session.userSession}" >
+        <div th:text="*{username}"></div>
+        <div><b>[[*{username}]]</b></div>
+        <div th:with="text='欢迎,<em>' + *{username} + '</em>'">
+            <div>[[${text}]]</div>
+            <div>[(${text})]</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:with="basePath = ${#httpServletRequest.getScheme() + '://' +
+      #httpServletRequest.getServerName() + ':' + #httpServletRequest.getServerPort()}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{loginPage.title}">登录</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <script th:src="@{/jquery/jquery-3.4.0.min.js}"></script>
+    <script th:src="@{/bootstrap-3.3.7/js/bootstrap.js}"></script>
+    <script th:src="@{/layer/layer.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-3.3.7/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/userLogin.css}"/>
+    <script th:inline="javascript">
+        function login() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            if(username.trim().length === 0){
+                layer.tips('请输入用户名后登录哦', '#username',{
+                    tips: [2, '#3595CC']});
+                return ;
+            }
+            if(password.trim().length === 0){
+                layer.tips('请输入密码后登录哦', '#password',{
+                    tips: [2, '#3595CC']});
+                return ;
+            }
+            $.ajax({
+                url: [[${basePath}]] + "/user/login",
+                type: "POST",
+                data: {
+                    username: username,
+                    password: password
+                },
+                beforeSend: function(){
+                    // 禁用按钮防止重复提交
+                    $("#login").attr("disabled", "disabled");
+                    $("#login").html("登录中...");
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg('登录成功，正在跳转...');
+                        location.href = [[${basePath}]] + "/user/main";
+                        $("#login").removeAttr("disabled");
+                    }else {
+                        layer.msg("登录失败，" + data.message);
+                        $("#login").removeAttr("disabled");
+                        $("#login").html("登录");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="loginbox" class="container">
+        <p th:text="#{loginPage.welcome}">欢迎</p>
+        <form id="loginform">
+            <div class="row">
+                <label for="username" class="col-md-3"><i class="glyphicon glyphicon-user"></i></label>
+                <input id="username" type="text" class="col-md-9" name="username" th:placeholder="#{loginPage.usernamePlaceholder}"/>
+            </div>
+            <div class="row">
+                <label for="password" class="col-md-3"><i class="glyphicon glyphicon-lock"></i></label>
+                <input id="password" type="password" class="col-md-9" name="password" th:placeholder="#{loginPage.passwordPlaceholder}"/>
+            </div>
+            <div class="row">
+                <a id="login" onclick="login()" class="btn btn-success col-md-offset-1 col-md-11" th:text="#{loginPage.login}">登录</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

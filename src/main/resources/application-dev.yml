@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/demodb?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=GMT
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    cache: false
+  messages:
+    basename: static/messages/messages
+mybatis:
+  type-aliases-package: com.gz.example.demo.pojo
+logging:
+  level:
+    com.gz.example.demo.dao: debug

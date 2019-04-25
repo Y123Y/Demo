@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:with="basePath = ${#httpServletRequest.getScheme() + '://' +
+      #httpServletRequest.getServerName() + ':' + #httpServletRequest.getServerPort()}">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Not Found</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/Matrixadmin/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/Matrixadmin/css/bootstrap-responsive.min.css}"/>
+    <link rel="stylesheet" th:href="@{/Matrixadmin/css/matrix-style.css}"/>
+    <link rel="stylesheet" th:href="@{/Matrixadmin/css/matrix-media.css}"/>
+    <link th:href="@{/Matrixadmin/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
+</head>
+<body>
+    <div id="content" style="margin-left: 0">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-title"><span class="icon"> <i class="icon-info-sign"></i> </span>
+                            <h5>Error 404</h5>
+                        </div>
+                        <div class="widget-content">
+                            <div class="error_ex">
+                                <h1>404</h1>
+                                <h3>Opps, You're lost.</h3>
+                                <p>We can not find the page you're looking for.</p>
+                                <a class="btn btn-warning btn-big" th:href="${basePath + '/user/main'}">Back to Home</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
